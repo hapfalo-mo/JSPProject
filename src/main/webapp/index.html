@@ -75,7 +75,7 @@
                     }
                 }
                 ).then(data => {
-                   localStorage.setItem("userList",JSON.stringify(data));
+                   localStorage.setItem("user",JSON.stringify(data));
                    window.location.href = "homepage.jsp";
                 }).catch(err => console.log(err));
             }

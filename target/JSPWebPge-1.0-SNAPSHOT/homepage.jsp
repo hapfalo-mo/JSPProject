@@ -4,16 +4,41 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/standard/permittedTaglibs" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>HomePage</title>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                let user = localStorage.getItem("user");
+                if (user) {
+                    userObj = JSON.parse(user);
+                    // Display User 
+                    document.getElementById("UserID").innerText = userObj.user_id;
+                    document.getElementById("Username").innerText = userObj.username;
+                    document.getElementById("email").innerText = userObj.user_email;
+                    document.getElementById("phonenumber").innerText = userObj.user_phone_number;
+                    document.getElementById("createdAt").innerText = userObj.user_created_at;
+                    document.getElementById("updatedAt").innerText = userObj.user_updated_at;
+                    document.getElementById("deletedAt").innerText = userObj.user_deleted_at;
+                    document.getElementById("countorder").innerText = userObj.order_count;
+                } else {
+                    console.log("No user found !");
+                }
+            }
+            );
+            
+            // Move to update UserPage
+            function update(){
+                window.location.href = "updateUser.jsp";
+            }
+        </script>
     </head>
     <body>
-        <h1>User List</h1>
+        <h1>User Info</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -27,9 +52,24 @@
                     <th scope="col">Number of Order</th>
                 </tr>
             </thead>
-           <% 
-               var userList = localStorage.getItem("user")
-               %>
+            <tbody>
+                <tr>
+                    <td id="*"></td>
+                    <td id="UserID"></td>
+                    <td id="Username"></td>
+                    <td id="email"></td>
+                    <td id="phonenumber"></td>
+                    <td id="createdAt"></td>
+                    <td id="updatedAt"></td>
+                    <td id="deletedAt"></td>
+                    <td id="countorder"></td>
+                </tr>
+            </tbody>
         </table>
+        <div>
+            <button id="update" onclick="update()">
+                Update Info User
+            </button>
+        </div>
     </body>
 </html>
