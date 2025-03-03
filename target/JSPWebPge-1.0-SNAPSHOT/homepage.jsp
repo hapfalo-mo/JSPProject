@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>HomePage</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 let user = localStorage.getItem("user");
@@ -30,10 +31,18 @@
                 }
             }
             );
-            
+
             // Move to update UserPage
-            function update(){
+            function update() {
                 window.location.href = "updateUser.jsp";
+            }            
+            // Function logout
+             async function logout(){
+                localStorage.removeItem("user");
+                sessionStorage.removeItem("user");
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                },1000);
             }
         </script>
     </head>
@@ -44,6 +53,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">UserID</th>
+                    <th scope="col">Username</th>
                     <th scope="col">Email</th>
                     <th scope="col">PhoneNumber(Password)</th>
                     <th scope="col">Created At</th>
@@ -67,8 +77,11 @@
             </tbody>
         </table>
         <div>
-            <button id="update" onclick="update()">
+            <button class="btn btn-warning" id="update" onclick="update()">
                 Update Info User
+            </button>
+            <button class="btn btn-danger" id="update" onclick="logout()">
+                Logout
             </button>
         </div>
     </body>

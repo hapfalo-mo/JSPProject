@@ -20,10 +20,6 @@
                     document.getElementById("Username").value = userObj.username;
                     document.getElementById("email").value = userObj.user_email;
                     document.getElementById("phonenumber").value = userObj.user_phone_number;
-                    document.getElementById("createdAt").value = userObj.user_created_at;
-                    document.getElementById("updatedAt").value = userObj.user_updated_at;
-                    document.getElementById("deletedAt").value = userObj.user_deleted_at;
-                    document.getElementById("countorder").value = userObj.order_count;
                 } else {
                     console.log("No user found !");
                 }
@@ -32,11 +28,25 @@
             function updateUser(event) {
                 event.preventDefault();
                 let userUpdate = {
-                    "username": document.getElementById("Username").value
-                    "user_email": document.getElementById("email").value
+                    "username": document.getElementById("Username").value,
+                    "user_email": document.getElementById("email").value,
                     "user_phone_number": document.getElementById("phonenumber").value
                 };
-                console.log(JSON.stringify(userUpdate));
+                fetch(`http://localhost:8181/api/v1/users/updateUser/${id}`, {
+                    method: PUT,
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(userUpdate);
+                }).then(response => response.json())
+                        .then(data => {
+                            data.Message();
+                            sleep(1000);
+                            window.location.href = "homepage.jsp";
+                        }
+                        ).catch(error => {
+                    console.log("Some error happened in process!");
+                });
             }
         </script>    
     </head>
@@ -52,17 +62,6 @@
             <label>Phone Number:</label>
             <input type="text" id="phonenumber" name="phoneNumber" ><br>
 
-            <label>Created At:</label>
-            <input type="text" id="createdAt" name="createdAt" ><br>
-
-            <label>Updated At:</label>
-            <input type="text" id="updatedAt" name="updatedAt" ><br>
-
-            <label>Deleted At:</label>
-            <input type="text" id="deletedAt" name="deletedAt" ><br>
-
-            <label>Number of Orders:</label>
-            <input type="number" id="countorder" name="numberOfOrders"><br>
             <button  type="submit">Update</button>
         </form>
     </body>

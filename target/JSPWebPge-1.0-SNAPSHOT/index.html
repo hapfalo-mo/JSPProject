@@ -51,6 +51,7 @@
         </div>
         <!--Code JavaScript-->
         <script>
+//            Login function
             function login() {
                 var email = document.getElementById("email").value;
                 var password = document.getElementById("password").value;
@@ -69,14 +70,19 @@
                 }).then(response =>
                 {
                     if (response.status === 200) {
-                        return response.json();    
+                        return response.json();
                     } else {
-                        return response.json().then(data => {alert(data.Message || "Login Failed !")});
+                        return response.json().then(data => {
+                            alert(data.Message || "Login Failed !");
+                            return Promise.reject("Login Failed");
+                        });
                     }
                 }
                 ).then(data => {
-                   localStorage.setItem("user",JSON.stringify(data));
-                   window.location.href = "homepage.jsp";
+                    if (!data)
+                        return;
+                    localStorage.setItem("user", JSON.stringify(data));
+                    window.location.href = "homepage.jsp";
                 }).catch(err => console.log(err));
             }
         </script>    
